@@ -1,14 +1,149 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Map | TSUNAGARI</title>
+    <title>D3 Radial Tidy Tree</title>
+    <style>
+        .node {
+            font: 12px sans-serif;
+            text-anchor: middle;
+        }
+
+        .link {
+            fill: none;
+            stroke: #ccc;
+            stroke-width: 2px;
+        }
+
+        .icon {
+            pointer-events: none;
+        }
+    </style>
 </head>
 
 <body>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script>
+        function convertData(elements, connections) {
+            // ノードをIDをキーにしてオブジェクトに保存
+            const nodes = {};
+            elements.forEach(element => {
+                nodes[element.id] = {
+                    id: element.id,
+                    name: element.name,
+                    icon: element.icon,
+                    type: element.type,
+                    children: []  // 子ノードを追加するための空の配列
+                };
+            });
 
+            // ルートノード（me）を作成
+            const root = {
+                id: "me",
+                name: "me",
+                children: []
+            };
+
+            // connectionsデータを元に親子関係を設定
+            connections.forEach(connection => {
+                const parent = connection.from === "me" ? root : nodes[connection.from];
+                const child = nodes[connection.to];
+                if (parent && child) {
+                    parent.children.push(child);  // 親ノードに子ノードを追加
+                }
+            });
+
+            // ルートノードを返す（meを中心としたツリー）
+            return root;
+        }
+
+        const elements = [
+            { "id": "a", "name": "a", "icon": "https://.../xxx.png", "type": "rect" },
+            { "id": "b", "name": "b", "icon": "https://.../xxx.png", "type": "circle" },
+            { "id": "c", "name": "c", "icon": "https://.../xxx.png", "type": "circle" }
+        ];
+
+        const connections = [
+            { "from": "me", "to": "a" },
+            { "from": "a", "to": "b" },
+            { "from": "a", "to": "c" }
+        ];
+
+        // データを変換
+        const data = convertData(elements, connections);
+
+        const width = 800;
+        const height = 800;
+        const radius = width / 2;
+
+        const tree = d3.tree()
+            .size([2 * Math.PI, radius - 100])
+            .separation((a, b) => (a.parent == b.parent ? 1 : 2) / a.depth);
+
+        const root = d3.hierarchy(data);
+        tree(root);
+
+        const svg = d3.select("body").append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .call(d3.zoom()
+            .scaleExtent([1 / 2, 5])
+            .on("zoom", function(event) {
+                svg.attr("transform", event.transform)
+            }))
+            .append("g")
+            .attr("transform", `translate(${width / 2},${height / 2})`);
+
+        // Links (edges between nodes)
+        svg.selectAll(".link")
+            .data(root.links())
+            .join("path")
+            .attr("class", "link")
+            .attr("d", d3.linkRadial()
+                .angle(d => d.x)
+                .radius(d => d.y));
+
+        // Nodes
+        const node = svg.selectAll(".node")
+            .data(root.descendants())
+            .join("g")
+            .attr("class", "node")
+            .attr("transform", d => `
+        rotate(${d.x * 180 / Math.PI - 90}) 
+        translate(${d.y},0)`);
+
+        // Draw nodes based on "type"
+        node.append("circle")
+            .attr("r", 32)
+            .attr("fill", "lightgreen");
+
+        node.filter(d => d.data.type === "rect")
+            .append("rect")
+            .attr("x", -10)
+            .attr("y", -10)
+            .attr("width", 20)
+            .attr("height", 20)
+            .attr("fill", "lightblue");
+
+        node.filter(d => d.data.icon)
+            .append("image")
+            .attr("xlink:href", d => d.data.icon)
+            .attr("x", -12)
+            .attr("y", -12)
+            .attr("width", 24)
+            .attr("height", 24)
+            .attr("class", "icon");
+
+        // Add node labels
+        node.append("text")
+            .attr("dy", ".31em")
+            .attr("x", d => d.x < Math.PI === !d.children ? 6 : -6)
+            .attr("text-anchor", d => d.x < Math.PI === !d.children ? "start" : "end")
+            .attr("transform", d => d.x >= Math.PI ? "rotate(180)" : null)
+            .text(d => d.data.name);
+    </script>
 </body>
 
 </html>
