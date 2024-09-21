@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>D3 Radial Tidy Tree</title>
     <style>
+        #map {
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+        }
+
         .node {
             font: 12px sans-serif;
             text-anchor: middle;
@@ -20,6 +25,14 @@
         .icon {
             pointer-events: none;
         }
+
+        .icon.circle {
+            clip-path: circle(31px at 32px 32px);
+        }
+
+        .icon.rect {
+            clip-path: inset(1px 1px 1px 1px);
+        }
     </style>
 </head>
 
@@ -28,6 +41,10 @@
     <script>
         function convertData(elements, connections) {
             // ノードをIDをキーにしてオブジェクトに保存
+            // Sort elements and connections
+            elements.sort((a, b) => a.id.localeCompare(b.id));
+            connections.sort((a, b) => a.from.localeCompare(b.from) || a.to.localeCompare(b.to));
+
             const nodes = {};
             elements.forEach(element => {
                 nodes[element.id] = {
@@ -40,15 +57,19 @@
             });
 
             // ルートノード（me）を作成
-            const root = {
-                id: "me",
-                name: "me",
-                children: []
-            };
+            let root = nodes["me"];
+            if (!root) {
+                root = {
+                    id: "me",
+                    name: "me",
+                    children: []
+                };
+                nodes["me"] = root;
+            }
 
             // connectionsデータを元に親子関係を設定
             connections.forEach(connection => {
-                const parent = connection.from === "me" ? root : nodes[connection.from];
+                const parent = nodes[connection.from];
                 const child = nodes[connection.to];
                 if (parent && child) {
                     parent.children.push(child);  // 親ノードに子ノードを追加
@@ -60,15 +81,17 @@
         }
 
         const elements = [
-            { "id": "a", "name": "a", "icon": "https://.../xxx.png", "type": "rect" },
+            { "id": "a", "name": "a", "icon": "/assets/test.png", "type": "rect" },
             { "id": "b", "name": "b", "icon": "https://.../xxx.png", "type": "circle" },
-            { "id": "c", "name": "c", "icon": "https://.../xxx.png", "type": "circle" }
+            { "id": "c", "name": "c", "icon": "https://.../yyy.png", "type": "circle" },
+            { "id": "d", "name": "d", "icon": "https://.../zzz.png", "type": "circle" }
         ];
 
         const connections = [
             { "from": "me", "to": "a" },
             { "from": "a", "to": "b" },
-            { "from": "a", "to": "c" }
+            { "from": "a", "to": "c" },
+            { "from": "b", "to": "c" },
         ];
 
         // データを変換
@@ -86,13 +109,14 @@
         tree(root);
 
         const svg = d3.select("body").append("svg")
+            .attr("id", "map")
             .attr("width", width)
             .attr("height", height)
             .call(d3.zoom()
-            .scaleExtent([1 / 2, 5])
-            .on("zoom", function(event) {
-                svg.attr("transform", event.transform)
-            }))
+                .scaleExtent([1 / 2, 5])
+                .on("zoom", function (event) {
+                    svg.attr("transform", event.transform)
+                }))
             .append("g")
             .attr("transform", `translate(${width / 2},${height / 2})`);
 
@@ -110,9 +134,7 @@
             .data(root.descendants())
             .join("g")
             .attr("class", "node")
-            .attr("transform", d => `
-        rotate(${d.x * 180 / Math.PI - 90}) 
-        translate(${d.y},0)`);
+            .attr("transform", d => `rotate(${d.x * 180 / Math.PI - 90}) translate(${d.y},0)`);
 
         // Draw nodes based on "type"
         node.append("circle")
@@ -121,27 +143,28 @@
 
         node.filter(d => d.data.type === "rect")
             .append("rect")
-            .attr("x", -10)
-            .attr("y", -10)
-            .attr("width", 20)
-            .attr("height", 20)
+            .attr("x", -32)
+            .attr("y", -32)
+            .attr("width", 64)
+            .attr("height", 64)
             .attr("fill", "lightblue");
 
         node.filter(d => d.data.icon)
             .append("image")
             .attr("xlink:href", d => d.data.icon)
-            .attr("x", -12)
-            .attr("y", -12)
-            .attr("width", 24)
-            .attr("height", 24)
-            .attr("class", "icon");
+            .attr("x", -32)
+            .attr("y", -32)
+            .attr("width", 64)
+            .attr("height", 64)
+            .attr("transform", d => `rotate(${90 - d.x * 180 / Math.PI})`)
+            .attr("class", d => "icon " + d.data.type);
 
-        // Add node labels
+        // Add node labels below the circles
         node.append("text")
-            .attr("dy", ".31em")
-            .attr("x", d => d.x < Math.PI === !d.children ? 6 : -6)
-            .attr("text-anchor", d => d.x < Math.PI === !d.children ? "start" : "end")
-            .attr("transform", d => d.x >= Math.PI ? "rotate(180)" : null)
+            .attr("dy", "48px")  // Position the text below the circle
+            .attr("x", 0)  // Center the text horizontally
+            .attr("text-anchor", "middle")  // Center the text
+            .attr("transform", d => `rotate(${90 - d.x * 180 / Math.PI})`)
             .text(d => d.data.name);
     </script>
 </body>
