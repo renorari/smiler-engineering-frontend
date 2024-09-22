@@ -114,10 +114,6 @@ body {
     cursor: pointer;
 }
 
-#add #add-person {
-    /* display: none; */
-}
-
 @media screen and (max-width: 40rem) {
     #add-container {
         padding: 0;
