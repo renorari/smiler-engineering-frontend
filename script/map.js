@@ -135,3 +135,19 @@ node.append("text")
     .attr("x", 0)
     .attr("text-anchor", "middle")
     .text(d => d.data.name);
+
+// 追加ボタン
+const addButton = document.querySelector("#add-button");
+const addModal = document.querySelector("#add");
+addButton.addEventListener("click", () => {
+    addModal.classList.add("is-active");
+});
+
+// 追加モーダル
+const addModalClose = document.querySelector("#add button.delete");
+const addModalCancel = document.querySelector("#add button.cancel");
+function closeAddModal() {
+    addModal.classList.remove("is-active");
+}
+addModalClose.addEventListener("click", closeAddModal);
+addModalCancel.addEventListener("click", closeAddModal);

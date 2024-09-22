@@ -2,6 +2,9 @@
 
 * {
     box-sizing: border-box;
+    transition-property: background-color, border-color, color, fill, stroke, opacity, transform, box-shadow, filter, display;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
 }
 
 :root {
@@ -9,6 +12,12 @@
     --person-border: var(--bulma-border);
     --place-background: #f1f1f1;
     --place-border: var(--bulma-border);
+    --bulma-weight-light: 400;
+    --bulma-weight-normal: 400;
+    --bulma-weight-medium: 400;
+    --bulma-weight-semibold: 400;
+    --bulma-weight-bold: 400;
+    --bulma-weight-extrabold: 400;
 }
 
 body {
@@ -86,4 +95,36 @@ body {
 #map #toolbar button img {
     width: 1.5rem;
     height: 1.5rem;
+}
+
+#add {
+    padding: 1rem;
+}
+
+#add .modal-card {
+    overflow-y: auto;
+    max-height: 100%;
+}
+
+#add #close-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.5rem;
+    cursor: pointer;
+}
+
+#add #add-person {
+    /* display: none; */
+}
+
+@media screen and (max-width: 40rem) {
+    #add-container {
+        padding: 0;
+    }
+
+    #add {
+        width: 100%;
+        border-radius: 0;
+    }
 }

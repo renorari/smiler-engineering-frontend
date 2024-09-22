@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <div id="map">
+    <main id="map">
         <div id="toolbar">
             <div id="objects"></div>
             <!-- <button id="my-location-button">
@@ -19,6 +19,96 @@
             <button id="add-button">
                 <img src="/icons/add.svg" alt="Add" class="icon">
             </button>
+        </div>
+    </main>
+
+    <div id="add" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">マップに追加</p>
+                <button class="delete" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+                <form id="add-form">
+                    <div class="field">
+                        <label class="label">追加するのは何ですか</label>
+                        <div class="control">
+                            <div id="type" class="radios">
+                                <label for="type-person">
+                                    <input type="radio" name="type" id="type-person" value="person" class="radio">
+                                    人
+                                </label>
+                                <label for="type-place">
+                                    <input type="radio" name="type" id="type-place" value="place" class="radio">
+                                    場所
+                                </label>
+                                <label for="type-event">
+                                    <input type="radio" name="type" id="type-event" value="event" class="radio">
+                                    イベント
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="add-person">
+                        <div class="field">
+                            <label class="label">名前</label>
+                            <div class="control">
+                                <input type="text" id="name" name="name" class="input" required placeholder="名前">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label" for="phone-number">電話番号</label>
+                            <div class="control">
+                                <input type="tel" id="phone-number" name="phone-number" class="input"
+                                    placeholder="電話番号">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label" for="email">メールアドレス</label>
+                            <div class="control">
+                                <input type="email" id="email" name="email" class="input" placeholder="メールアドレス">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label" for="address">住所</label>
+                            <div class="control">
+                                <input type="text" id="address" name="address" class="input" placeholder="住所">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label" for="organization">所属</label>
+                            <div class="control">
+                                <input type="text" id="organization" name="organization" class="input" placeholder="所属">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label" for="met-date">会った日</label>
+                            <div class="control">
+                                <input type="date" id="met-date" name="met-date" class="input" placeholder="会った日">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label" for="note">備考</label>
+                            <div class="control">
+                                <textarea id="note" name="note" class="textarea" placeholder="備考"></textarea>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label" for="url">URL</label>
+                            <div class="control">
+                                <input type="url" id="url" name="url" class="input" placeholder="URL">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </section>
+            <footer class="modal-card-foot is-justify-content-end">
+                <div class="buttons">
+                    <button class="button cancel">キャンセル</button>
+                    <button class="button is-primary" type="submit" form="add-form">追加</button>
+                </div>
+            </footer>
         </div>
     </div>
 
