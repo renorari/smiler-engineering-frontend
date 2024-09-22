@@ -1,0 +1,89 @@
+@import url("https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css");
+
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --person-background: #f1f1f1;
+    --person-border: var(--bulma-border);
+    --place-background: #f1f1f1;
+    --place-border: var(--bulma-border);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+#map {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+}
+
+#map #map-view {
+    flex: 1;
+    width: 100%;
+}
+
+#map-view .node {
+    text-anchor: middle;
+    font: 12px sans-serif;
+}
+
+#map-view .link {
+    fill: none;
+    stroke: var(--bulma-border);
+    stroke-width: 2px;
+}
+
+#map-view image {
+    pointer-events: none;
+    border: 2px solid red;
+}
+
+#map-view image.circle {
+    clip-path: circle(50%);
+}
+
+#map #toolbar {
+    box-shadow: var(--bulma-shadow);
+    display: flex;
+    gap: 0.5rem;
+    position: absolute;
+    z-index: 10;
+    bottom: 1rem;
+    left: 1rem;
+    width: calc(100% - 2rem);
+    min-height: 3rem;
+    padding: 0.5rem;
+    background-color: var(--bulma-body-background-color);
+    border-radius: 100vw;
+}
+
+#map #toolbar #objects {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+
+#map #toolbar button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+    background-color: var(--bulma-primary-color);
+    cursor: pointer;
+    border: 1px solid var(--bulma-border);
+    border-radius: 100vw;
+    color: var(--bulma-primary-text-color);
+}
+
+#map #toolbar button img {
+    width: 1.5rem;
+    height: 1.5rem;
+}
