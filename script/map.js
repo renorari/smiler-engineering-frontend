@@ -3,26 +3,26 @@ import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
 // 仮データ
 const elements = [
-    { "id": "a", "name": "DERTA", "image": "/temp/ed9d4233a75aea4b33cc6b1b10bbdfc2.png", "type": "rect" },
-    { "id": "b", "name": "佐藤 太郎", "image": "/temp/60b65390-4495-406a-9b96-88e8fad733f0.jpeg", "type": "circle" },
-    { "id": "c", "name": "鈴木 花子", "image": "/temp/39f7e5f1-47aa-425f-bb85-4f6c9f54ca18.jpg", "type": "circle" },
-    { "id": "d", "name": "長岡市", "image": "/temp/e403IG00000270.jpg", "type": "rect" },
-    { "id": "e", "name": "高橋 一郎", "image": "/temp/ad506e1d-a90e-4315-9fe0-586f3347cfcf.jpg", "type": "circle" },
-    { "id": "f", "name": "山本 翔", "image": "/temp/cc5a9ab6-c8b2-42ec-b5ee-155f0a3c6e50.jpg", "type": "circle" },
-    { "id": "g", "name": "渡辺 健太", "image": "/temp/d4fbb9bb-5f56-466c-92dc-e4babafaab10.jpg", "type": "circle" },
-    { "id": "h", "name": "伊藤 由美", "image": null, "type": "circle" },
-    { "id": "i", "name": "Startup Weekend", "image": "/temp/sw-logo.png", "type": "rect" },
-    { "id": "j", "name": "田中 美咲", "image": "/temp/joshua-rawson-harris-YNaSz-E7Qss-unsplash.jpg", "type": "circle" },
-    { "id": "k", "name": "中村 真奈", "image": null, "type": "circle" },
-    { "id": "l", "name": "小林 大輔", "image": null, "type": "circle" },
-    { "id": "m", "name": "加藤 里奈", "image": null, "type": "circle" },
-    { "id": "n", "name": "佐々木 健", "image": null, "type": "circle" },
-    { "id": "o", "name": "松本 直子", "image": null, "type": "circle" },
-    { "id": "p", "name": "藤田 亮", "image": null, "type": "circle" },
-    { "id": "q", "name": "石田 美穂", "image": null, "type": "circle" },
-    { "id": "r", "name": "山田 太郎", "image": null, "type": "circle" },
-    { "id": "s", "name": "木村 花子", "image": null, "type": "circle" },
-    { "id": "t", "name": "井上 一郎", "image": null, "type": "circle" }
+    { "id": "a", "name": "DERTA", "image": "/temp/ed9d4233a75aea4b33cc6b1b10bbdfc2.png", "type": "event" },
+    { "id": "b", "name": "佐藤 太郎", "image": "/temp/60b65390-4495-406a-9b96-88e8fad733f0.jpeg", "type": "person" },
+    { "id": "c", "name": "鈴木 花子", "image": "/temp/39f7e5f1-47aa-425f-bb85-4f6c9f54ca18.jpg", "type": "person" },
+    { "id": "d", "name": "長岡市", "image": "/temp/e403IG00000270.jpg", "type": "place" },
+    { "id": "e", "name": "高橋 一郎", "image": "/temp/ad506e1d-a90e-4315-9fe0-586f3347cfcf.jpg", "type": "person" },
+    { "id": "f", "name": "山本 翔", "image": "/temp/cc5a9ab6-c8b2-42ec-b5ee-155f0a3c6e50.jpg", "type": "person" },
+    { "id": "g", "name": "渡辺 健太", "image": "/temp/d4fbb9bb-5f56-466c-92dc-e4babafaab10.jpg", "type": "person" },
+    { "id": "h", "name": "伊藤 由美", "image": null, "type": "person" },
+    { "id": "i", "name": "Startup Weekend", "image": "/temp/sw-logo.png", "type": "event" },
+    { "id": "j", "name": "田中 美咲", "image": "/temp/joshua-rawson-harris-YNaSz-E7Qss-unsplash.jpg", "type": "person" },
+    { "id": "k", "name": "中村 真奈", "image": null, "type": "person" },
+    { "id": "l", "name": "小林 大輔", "image": null, "type": "person" },
+    { "id": "m", "name": "加藤 里奈", "image": null, "type": "person" },
+    { "id": "n", "name": "佐々木 健", "image": null, "type": "person" },
+    { "id": "o", "name": "松本 直子", "image": null, "type": "person" },
+    { "id": "p", "name": "藤田 亮", "image": null, "type": "person" },
+    { "id": "q", "name": "石田 美穂", "image": null, "type": "person" },
+    { "id": "r", "name": "山田 太郎", "image": null, "type": "person" },
+    { "id": "s", "name": "木村 花子", "image": null, "type": "person" },
+    { "id": "t", "name": "井上 一郎", "image": null, "type": "person" }
 ];
 
 const connections = [
@@ -37,13 +37,13 @@ const connections = [
     { "from": "b", "to": "i" },
     { "from": "i", "to": "j" },
     { "from": "i", "to": "k" },
-    { "from": "i", "to": "l" },
+    { "from": "me", "to": "l" },
     { "from": "i", "to": "m" },
     { "from": "a", "to": "n" },
     { "from": "a", "to": "o" },
     { "from": "o", "to": "p" },
     { "from": "o", "to": "q" },
-    { "from": "o", "to": "r" },
+    { "from": "me", "to": "r" },
     { "from": "o", "to": "s" },
     { "from": "o", "to": "t" }
 ];
@@ -52,7 +52,7 @@ const me = {
     id: "me",
     name: "私",
     image: "/temp/f0cb2cfe-c842-457b-9141-88d81787f7a6.jpeg",
-    type: "circle"
+    type: "person"
 };
 
 function convertData(elements, connections) {
@@ -88,6 +88,7 @@ window.addEventListener('resize', () => {
         .attr("transform", `translate(${width / 2},${height / 2})`);
 });
 const radius = connections.length * 32;
+const border = 2;
 
 const tree = d3.tree()
     .size([2 * Math.PI, radius])
@@ -101,7 +102,7 @@ const svg = d3.select("#map").append("svg")
     .attr("width", width)
     .attr("height", height)
     .call(d3.zoom()
-        .scaleExtent([1 / 10, 2])
+        .scaleExtent([1 / 10, 5])
         .on("zoom", (event) => {
             svg.attr("transform", event.transform);
         }))
@@ -124,24 +125,37 @@ const node = svg.selectAll(".node")
     .append("g")
     .attr("transform", d => `rotate(${90 - d.x * 180 / Math.PI})`);
 
-node.filter(d => d.data.type === "rect")
+node.filter(d => d.data.type === "place")
     .append("rect")
     .attr("x", -32)
     .attr("y", -32)
     .attr("width", 64)
     .attr("height", 64)
     .attr("fill", "var(--place-background)")
-    .attr("stroke-width", 2)
+    .attr("paint-order", "stroke")
+    .attr("stroke-width", border*2)
     .attr("stroke", "var(--place-border)");
 
-node.filter(d => d.data.type === "circle")
+node.filter(d => d.data.type === "event")
+    .append("rect")
+    .attr("x", -32)
+    .attr("y", -32)
+    .attr("width", 64)
+    .attr("height", 64)
+    .attr("fill", "var(--event-background)")
+    .attr("paint-order", "stroke")
+    .attr("stroke-width", border*2)
+    .attr("stroke", "var(--event-border)");
+
+node.filter(d => d.data.type === "person")
     .append("circle")
     .attr("cx", 0)
     .attr("cy", 0)
     .attr("r", 32)
     .attr("fill", "var(--person-background)")
-    .attr("stroke-width", 2)
-    .attr("stroke", "var(--person-border)");
+    .attr("paint-order", "stroke")
+    .attr("stroke-width", border*2)
+    .attr("stroke", (d) => d.data.id === "me" ? "var(--me-border)" : "var(--person-border)");
 
 node.filter(d => d.data.image)
     .append("image")

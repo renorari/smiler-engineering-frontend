@@ -8,10 +8,13 @@
 }
 
 :root {
-    --person-background: #f1f1f1;
-    --person-border: var(--bulma-border);
-    --place-background: #f1f1f1;
-    --place-border: var(--bulma-border);
+    --person-background: var(--bulma-border);
+    --person-border: var(--bulma-link);
+    --me-border: var(--bulma-danger);
+    --place-background: var(--bulma-border);
+    --place-border: var(--bulma-primary);
+    --event-background: var(--bulma-border);
+    --event-border: var(--bulma-info);
     --bulma-weight-light: 400;
     --bulma-weight-normal: 400;
     --bulma-weight-medium: 400;
@@ -46,15 +49,14 @@ body {
 #map-view .link {
     fill: none;
     stroke: var(--bulma-border);
-    stroke-width: 2px;
+    stroke-width: 4px;
 }
 
 #map-view image {
     pointer-events: none;
-    border: 2px solid red;
 }
 
-#map-view image.circle {
+#map-view image.person {
     clip-path: circle(50%);
 }
 

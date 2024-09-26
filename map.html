@@ -52,7 +52,31 @@
                     </div>
                     <div id="add-person" class="is-hidden">
                         <div class="field">
-                            <label class="label">名前</label>
+                            <label class="label" for="image">画像</label>
+                            <div class="control">
+                                <div class="file has-name is-boxed">
+                                    <label class="file-label">
+                                        <input class="file-input" type="file" name="resume" onchange="updateFileName(this)" />
+                                        <span class="file-cta">
+                                            <span class="file-icon">
+                                                <img src="/icons/upload.svg" alt="Upload" class="icon">
+                                            </span>
+                                            <span class="file-label">ファイルを選択</span>
+                                        </span>
+                                        <span class="file-name">ファイルを選択してください</span>
+                                    </label>
+
+                                    <script>
+                                        function updateFileName(input) {
+                                            const fileName = input.files.length > 0 ? input.files[0].name : 'ファイルを選択してください';
+                                            input.nextElementSibling.nextElementSibling.textContent = fileName;
+                                        }
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label" for="name">名前</label>
                             <div class="control">
                                 <input type="text" id="name" name="name" class="input" required placeholder="名前">
                             </div>
