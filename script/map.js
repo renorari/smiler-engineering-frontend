@@ -23,6 +23,11 @@ if (localStorage.getItem("connections")) {
     connections = JSON.parse(localStorage.getItem("connections"));
 }
 
+function saveData() {
+    localStorage.setItem("elements", JSON.stringify(elements));
+    localStorage.setItem("connections", JSON.stringify(connections));
+}
+
 const me = {
     id: "me",
     name: "私",
@@ -178,8 +183,31 @@ function render() {
         });
     });
 
-    localStorage.setItem("elements", JSON.stringify(elements));
-    localStorage.setItem("connections", JSON.stringify(connections));
+    // elementsの中で、connectionsに存在しないものは、objectsに追加する
+    const objects = document.querySelector("#objects");
+    objects.innerHTML = "";
+    elements.forEach((element) => {
+        if (!connections.find((connection) => connection.to === element.id || connection.from === element.id)) {
+            const object = document.createElement("div");
+            object.id = element.id;
+            object.classList.add("object");
+            object.classList.add(element.type);
+            if (element.image) {
+                const img = document.createElement("img");
+                img.src = element.image;
+                object.appendChild(img);
+            }
+            const p = document.createElement("p");
+            p.textContent = element.name;
+            object.appendChild(p);
+            object.addEventListener("click", () => {
+                object.classList.toggle("selected");
+            });
+            objects.appendChild(object);
+        }
+    });
+
+    saveData();
 }
 render();
 
@@ -273,4 +301,6 @@ document.querySelector("#add-form").addEventListener("submit", (event) => {
         object.classList.toggle("selected");
     });
     document.querySelector("#objects").appendChild(object);
+
+    saveData();
 });
