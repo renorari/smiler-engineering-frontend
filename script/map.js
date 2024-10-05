@@ -69,7 +69,8 @@ const svg = d3.select("#map").append("svg")
 
 function render() {
     const data = convertData(elements, connections);
-    const radius = connections.length < 5 ? connections.length * 32 : 160;
+    const radius = connections.length < 5 ? 160 : connections.length * 32;
+    console.log(radius);
 
     const tree = d3.tree()
         .size([2 * Math.PI, radius])
@@ -191,6 +192,7 @@ function closeAddModal() {
     document.querySelector("#add #add-event").classList.add("is-hidden");
     document.querySelector("#add #name").value = "";
     document.querySelector("#add #image").value = "";
+    document.querySelector("#add #image").nextElementSibling.nextElementSibling.textContent = "ファイルを選択してください";
 }
 addModalClose.addEventListener("click", closeAddModal);
 addModalCancel.addEventListener("click", closeAddModal);
