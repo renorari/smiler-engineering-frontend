@@ -261,25 +261,21 @@ typeEvent.addEventListener("click", () => {
     document.querySelector("#add #add-event").classList.remove("is-hidden");
 });
 
-function ImageToBase64(img, mime_type) {
-    // New Canvas
-    var canvas = document.createElement('canvas');
-    canvas.width = img.width;
-    canvas.height = img.height;
-    // Draw Image
-    var ctx = canvas.getContext('2d');
-    ctx.drawImage(img, 0, 0);
-    // To Base64
-    return canvas.toDataURL(mime_type);
-}
-
 // 追加
-document.querySelector("#add-form").addEventListener("submit", (event) => {
+document.querySelector("#add-form").addEventListener("submit", async (event) => {
     event.preventDefault();
     const type = document.querySelector("#add input[name=type]:checked").value;
     const name = document.querySelector("#add #name").value;
-    const imageFile = document.querySelector("#add #image").files[0];
-    const image = imageFile ? ImageToBase64(URL.createObjectURL(imageFile), "image/png") : null;
+    const file = document.querySelector("#add #image").files[0];
+    const fileReader = new FileReader();
+    let image = null;
+    if (file) {
+        image = await new Promise((resolve, reject) => {
+            fileReader.onload = () => resolve(fileReader.result);
+            fileReader.onerror = reject;
+            fileReader.readAsDataURL(file);
+        });
+    }
     const id = Math.random().toString(36).slice(-8);
 
     elements.push({ id, name, image, type });
