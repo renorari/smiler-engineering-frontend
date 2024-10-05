@@ -92,10 +92,26 @@ body {
     justify-content: center;
     align-items: center;
     background-color: var(--bulma-primary);
+    color: var(--text-color);
     cursor: pointer;
     border: 1px solid var(--bulma-border);
     border-radius: 100vw;
     overflow: hidden;
+}
+
+#map #toolbar #objects .object.person {
+    background-color: var(--person-background);
+    border-color: var(--person-border);
+}
+
+#map #toolbar #objects .object.place {
+    background-color: var(--place-background);
+    border-color: var(--place-border);
+}
+
+#map #toolbar #objects .object.event {
+    background-color: var(--event-background);
+    border-color: var(--event-border);
 }
 
 #map #toolbar #objects .object.selected {

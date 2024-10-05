@@ -69,7 +69,7 @@ const svg = d3.select("#map").append("svg")
 
 function render() {
     const data = convertData(elements, connections);
-    const radius = connections.length < 5 ? 160 : connections.length * 32;
+    const radius = 160 + connections.length * 64;
     console.log(radius);
 
     const tree = d3.tree()
@@ -78,6 +78,9 @@ function render() {
 
     const root = d3.hierarchy(data);
     tree(root);
+
+    svg.selectAll(".node").remove();
+    svg.selectAll(".link").remove();
 
     svg.selectAll(".link")
         .data(root.links())
@@ -123,7 +126,7 @@ function render() {
         .append("circle")
         .attr("cx", 0)
         .attr("cy", 0)
-        .attr("r", 32)
+        .attr("r", (d) => d.data.id === "me" ? 48 : 32)
         .attr("fill", (d) => d.data.id === "me" ? "var(--me-background)" : "var(--person-background)")
         .attr("paint-order", "stroke")
         .attr("stroke-width", border * 2)
@@ -247,6 +250,7 @@ document.querySelector("#add-form").addEventListener("submit", (event) => {
     const object = document.createElement("div");
     object.id = id;
     object.classList.add("object");
+    object.classList.add(type);
     if (image) {
         const img = document.createElement("img");
         img.src = image;
