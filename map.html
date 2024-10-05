@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" data-theme="light">
 
 <head>
     <meta charset="UTF-8">
@@ -12,7 +12,12 @@
 <body>
     <main id="map">
         <div id="toolbar">
-            <div id="objects"></div>
+            <div id="objects">
+                <!-- <div class="object" id="testobject">
+                    <img src="data:image/bmp;base64,Qk2OAAAAAAAAAIoAAAB8AAAAAQAAAAEAAAABABgAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAD/AAD/AAD/AAAAAAAA/0JHUnMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAA1+q1AA==" alt="Person" class="icon">
+                    <p>あいうえお</p>
+                </div> -->
+            </div>
             <!-- <button id="my-location-button">
                 <img src="/icons/my-location.svg" alt="My Location" class="icon">
             </button> -->
@@ -36,27 +41,27 @@
                         <div class="control">
                             <div id="type" class="radios">
                                 <label for="type-person">
-                                    <input type="radio" name="type" id="type-person" value="person" class="radio">
+                                    <input type="radio" name="type" id="type-person" value="person" class="radio" required>
                                     人
                                 </label>
                                 <label for="type-place">
-                                    <input type="radio" name="type" id="type-place" value="place" class="radio">
+                                    <input type="radio" name="type" id="type-place" value="place" class="radio" required>
                                     場所
                                 </label>
                                 <label for="type-event">
-                                    <input type="radio" name="type" id="type-event" value="event" class="radio">
+                                    <input type="radio" name="type" id="type-event" value="event" class="radio" required>
                                     イベント
                                 </label>
                             </div>
                         </div>
                     </div>
-                    <div id="add-person" class="is-hidden">
+                    <div id="basic-info" class="is-hidden">
                         <div class="field">
                             <label class="label" for="image">画像</label>
                             <div class="control">
                                 <div class="file has-name is-boxed">
                                     <label class="file-label">
-                                        <input class="file-input" type="file" name="resume" onchange="updateFileName(this)" />
+                                        <input class="file-input" type="file" name="image" id="image" accept="image/*" onchange="updateFileName(this)" />
                                         <span class="file-cta">
                                             <span class="file-icon">
                                                 <img src="/icons/upload.svg" alt="Upload" class="icon">
@@ -81,55 +86,15 @@
                                 <input type="text" id="name" name="name" class="input" required placeholder="名前">
                             </div>
                         </div>
-                        <div class="field">
-                            <label class="label" for="phone-number">電話番号</label>
-                            <div class="control">
-                                <input type="tel" id="phone-number" name="phone-number" class="input"
-                                    placeholder="電話番号">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label class="label" for="email">メールアドレス</label>
-                            <div class="control">
-                                <input type="email" id="email" name="email" class="input" placeholder="メールアドレス">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label class="label" for="address">住所</label>
-                            <div class="control">
-                                <input type="text" id="address" name="address" class="input" placeholder="住所">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label class="label" for="organization">所属</label>
-                            <div class="control">
-                                <input type="text" id="organization" name="organization" class="input" placeholder="所属">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label class="label" for="met-date">会った日</label>
-                            <div class="control">
-                                <input type="date" id="met-date" name="met-date" class="input" placeholder="会った日">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label class="label" for="note">備考</label>
-                            <div class="control">
-                                <textarea id="note" name="note" class="textarea" placeholder="備考"></textarea>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label class="label" for="url">URL</label>
-                            <div class="control">
-                                <input type="url" id="url" name="url" class="input" placeholder="URL">
-                            </div>
-                        </div>
+                    </div>
+                    <div id="add-person" class="is-hidden">
+                        
                     </div>
                     <div id="add-place" class="is-hidden">
-                        place
+                        
                     </div>
                     <div id="add-event" class="is-hidden">
-                        event
+                        
                     </div>
                 </form>
             </section>

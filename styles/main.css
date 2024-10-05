@@ -3,18 +3,20 @@
 * {
     box-sizing: border-box;
     transition-property: background-color, border-color, color, fill, stroke, opacity, transform, box-shadow, filter, display;
-    transition-duration: 0.3s;
+    transition-duration: 0.25s;
     transition-timing-function: ease;
 }
 
 :root {
-    --person-background: var(--bulma-border);
+    --person-background: var(--bulma-link);
     --person-border: var(--bulma-link);
     --me-border: var(--bulma-danger);
-    --place-background: var(--bulma-border);
+    --me-background: var(--bulma-danger);
+    --place-background: var(--bulma-primary);
     --place-border: var(--bulma-primary);
-    --event-background: var(--bulma-border);
+    --event-background: var(--bulma-info);
     --event-border: var(--bulma-info);
+    --text-color: var(--bulma-white);
     --bulma-weight-light: 400;
     --bulma-weight-normal: 400;
     --bulma-weight-medium: 400;
@@ -77,9 +79,58 @@ body {
 
 #map #toolbar #objects {
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     flex: 1;
+    gap: 1rem;
+}
+
+#map #toolbar #objects .object {
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bulma-primary);
+    cursor: pointer;
+    border: 1px solid var(--bulma-border);
+    border-radius: 100vw;
+    overflow: hidden;
+}
+
+#map #toolbar #objects .object.selected {
+    box-shadow: 0 0 0 0.1rem var(--bulma-primary);
+    animation: pulse 1s infinite ease;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+#map #toolbar #objects .object:has(img) p {
+    display: none;
+}
+
+#map #toolbar #objects .object img {
+    width: 3rem;
+    height: 3rem;
+
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    user-drag: none;
 }
 
 #map #toolbar button {
@@ -95,8 +146,8 @@ body {
 }
 
 #map #toolbar button img {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 2rem;
+    height: 2rem;
 }
 
 #add {
