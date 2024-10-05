@@ -2,19 +2,26 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
 // 仮データ
-const elements = [
+var elements = [
     // { "id": "a", "name": "DERTA", "image": "/temp/ed9d4233a75aea4b33cc6b1b10bbdfc2.png", "type": "event" },
     // { "id": "b", "name": "佐藤 太郎", "image": "/temp/60b65390-4495-406a-9b96-88e8fad733f0.jpeg", "type": "person" },
     // { "id": "c", "name": "鈴木 花子", "image": "/temp/39f7e5f1-47aa-425f-bb85-4f6c9f54ca18.jpg", "type": "person" },
     // { "id": "d", "name": "長岡市", "image": "/temp/e403IG00000270.jpg", "type": "place" }
 ];
 
-const connections = [
+var connections = [
     // { "from": "me", "to": "a" },
     // { "from": "a", "to": "b" },
     // { "from": "a", "to": "c" },
     // { "from": "me", "to": "d" }
 ];
+
+if (localStorage.getItem("elements")) {
+    elements = JSON.parse(localStorage.getItem("elements"));
+}
+if (localStorage.getItem("connections")) {
+    connections = JSON.parse(localStorage.getItem("connections"));
+}
 
 const me = {
     id: "me",
@@ -170,6 +177,9 @@ function render() {
             console.log(elements, connections);
         });
     });
+
+    localStorage.setItem("elements", JSON.stringify(elements));
+    localStorage.setItem("connections", JSON.stringify(connections));
 }
 render();
 
